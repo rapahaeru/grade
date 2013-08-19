@@ -38,7 +38,8 @@
 |
 */
 
-$route['default_controller'] = "dashboard";
+$route['default_controller'] 	= "dashboard";
+$route['register']				= "register";
 $route['404_override'] = '';
 
 

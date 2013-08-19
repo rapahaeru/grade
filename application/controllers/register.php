@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Register extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
@@ -12,8 +12,9 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{
 
-		$data['globals_titlePage'] = " Dashboard";
-		$this->load->view('dashboard',$data);
+		$data['globals_titlePage'] = " Registro";
+
+		$this->load->view('register',$data);
 
 	}
 }

@@ -1,11 +1,19 @@
 <?php
 
-
+/// VIEWS E CONTROLLERS ////////////////////////////////////////////////////////////
 $GLOBALS['title']					= "|| GRADE ||";
+
+/// CONFIG/CONFIG.PHP ///////////////////////////////////////////////////////////////
 $GLOBALS['domain'] 					= "http://".$_SERVER['HTTP_HOST'];
 $GLOBALS['base_path'] 				= '/grade';
-
 $GLOBALS['application_default'] 	= '/application';
+
+///// CONFIG/DATABSE.PHP - DADOS DE ACESSO BANCO DE DADOS ///////////////////////////
+$GLOBALS['database']['hostname'] 	= "localhost";
+$GLOBALS['database']['username'] 	= "root";
+$GLOBALS['database']['password'] 	= "root";
+$GLOBALS['database']['database'] 	= "db_grade";
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

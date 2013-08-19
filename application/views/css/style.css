@@ -5,10 +5,38 @@ header, section, footer {width: 100%; float: left;}
 
 header {background-color: }
 
-section { height: 50em;}
 header h1 {float: left; width: 12em;}
-header nav{float: right; width: 20em;}
-header nav ul li {float: left; width: 7em;}
+header ul#login {float: right; width: 20em; list-style: none;}
+header ul#login li {float: left; width: 7em;}
+
+
+header div.navbar {width: 100%; float: left;}
+header div.navbar .dropdown-menu {left: 45%;}
+
+/*AJUSTE AO BOOSTRAP DE ALINHAMENTO*/
+.navbar .nav > li > a { padding: 18px 15px 15px; }
+
+section { height: 50em;}
+
+section form#register-form fieldset {width: 40%; margin: 0 auto;}
+section form#register-form fieldset button{float: right; margin-right: 10px; }
+section form legend {width: 70%; padding: 0 10px;}
+
+
+section form label.valid {
+  width: 24px;
+  height: 24px;
+  background: url(../images/valid.png) center center no-repeat;
+  display: inline-block;
+  text-indent: -9999px;
+}
+section form label.error {
+  font-weight: bold;
+  /*background: url(../images/error.png) center center no-repeat;*/
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
 
 
 footer p{}
