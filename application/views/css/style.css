@@ -1,0 +1,16 @@
+
+
+
+header, section, footer {width: 100%; float: left;}
+
+header {background-color: }
+
+section { height: 50em;}
+header h1 {float: left; width: 12em;}
+header nav{float: right; width: 20em;}
+header nav ul li {float: left; width: 7em;}
+
+
+footer p{}
+
+
