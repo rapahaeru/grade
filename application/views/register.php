@@ -20,30 +20,35 @@
             
             <? require "incs/header.php";?>
 
+            <ul class="breadcrumb">
+                <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
+                <!-- <li><a href="#">Library</a> <span class="divider">/</span></li> -->
+                <li class="active">Cadastro</li>
+            </ul>        
+
         </header>
 
-        <ul class="breadcrumb">
-            <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
-            <!-- <li><a href="#">Library</a> <span class="divider">/</span></li> -->
-            <li class="active">Cadastro</li>
-        </ul>
+
 
         <section>
-    
-            <form id="register-form" action="" class="form-horizontal">
+
+            <div class="returnForm"><?php echo validation_errors(); ?></div>   
+
+            <?=form_open('register/profile',  array('class' => 'form-horizontal', 'id' => 'register-form')  ); ?>
+            <!-- <form id="register-form" action="" class="form-horizontal"> -->
                 <fieldset>
-                    <legend> Preencha o formuĺário de cadastro </legend>
+                    <legend> Preencha o formulário de cadastro </legend>
                     <div class="control-group">
                         <label class="control-label" for="inputName">Nome</label>
                         <div class="controls">
-                            <input type="text" id="name" name="name" placeholder="Digite seu nome">
+                            <input type="text" id="name" name="name" placeholder="Digite seu nome" value="<?=set_value('name')?>">
                         </div>
                     </div>
                     
                     <div class="control-group">
                         <label class="control-label" for="mail">E-mail</label>
                         <div class="controls">
-                            <input type="text" id="mail" name="mail" placeholder="Digite seu e-mail">
+                            <input type="email" id="mail" name="mail" placeholder="Digite seu e-mail" value="<?=set_value('mail')?>">
                         </div>
                     </div>
                     
@@ -62,7 +67,7 @@
                     </div>                    
                     <div class="form-actions">
                         
-                        <button class="btn btn-primary" type="button">Confirma</button>
+                        <button class="btn btn-primary" type="submit">Confirma</button>
                         <button type="reset" class="btn btn-danger">Cancel</button>    
                     </div>
                     
