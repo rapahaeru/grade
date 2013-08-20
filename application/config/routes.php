@@ -40,7 +40,7 @@
 
 $route['default_controller'] 			= "dashboard";
 $route['register']						= "register";
-$route['register/profile']				= "register/profile";
+$route['register/profile']				= "register/insert";
 $route['404_override'] = '';
 
 

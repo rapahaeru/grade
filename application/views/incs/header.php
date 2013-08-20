@@ -21,7 +21,25 @@
 			      	</li>
 			      <li><a href="#">Grade it!</a></li>
 			    </ul>
+
+
+					<!-- BOOTSTRAP ::::: CADASTROS -->
+					<div class="btn-group ">
+					  <button class="btn btn-action">Cadastre</button>
+					  <button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu">
+							<li><a href="#">Séries</a></li>
+							<li><a href="#">Filmes</a></li>
+							<li><a href="#">Livros</a></li>
+					  </ul>
+					</div>
+
 			  </div>
+
+
+
 			</div>
 			<!-- BOOTSTRAP ::::: MENU COM DROPDOWN  -->
 	

@@ -34,7 +34,7 @@
 
             <div class="returnForm"><?php echo validation_errors(); ?></div>   
 
-            <?=form_open('register/profile',  array('class' => 'form-horizontal', 'id' => 'register-form')  ); ?>
+            <?=form_open('register/insert',  array('class' => 'form-horizontal', 'id' => 'register-form')  ); ?>
             <!-- <form id="register-form" action="" class="form-horizontal"> -->
                 <fieldset>
                     <legend> Preencha o formulário de cadastro </legend>

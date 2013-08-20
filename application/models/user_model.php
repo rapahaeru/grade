@@ -5,7 +5,7 @@ class User_model extends CI_Model {
 
 	/// REGISTER :: PROFILE
 
-	function insert($post){
+	function save($post){
 
 		$array = array(
 						'usr_date_insert' 		=> date ("Y-m-d H:i:s"),

@@ -1,6 +1,7 @@
 
 
 
+/*::: HEADER ::::*/
 header, section, footer {width: 100%; float: left;}
 
 header {background-color: }
@@ -16,6 +17,11 @@ header ul.breadcrumb {float: left;}
 
 /*AJUSTE AO BOOSTRAP DE ALINHAMENTO*/
 .navbar .nav > li > a { padding: 18px 15px 15px; }
+
+div.navbar-inner div.btn-group {float: right; margin-top: 10px}
+div.navbar-inner div.btn-group ul.dropdown-menu {left: -45%}
+div.navbar-inner div.btn-group ul.dropdown-menu li a{padding: 3px 5px;}
+
 
 section { height: 50em;}
 

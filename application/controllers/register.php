@@ -21,7 +21,7 @@ class Register extends CI_Controller {
 	}
 
 
-	public function profile(){
+	public function insert(){
 
 		$data['globals_titlePage'] = " Registro";
 
@@ -77,7 +77,7 @@ class Register extends CI_Controller {
 
 			//var_dump($posts);
 			
-			$insertUser = $this->User->insert($posts);
+			$insertUser = $this->User->save($posts);
 
 			if (!$insertUser){
 
