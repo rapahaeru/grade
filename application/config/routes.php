@@ -41,6 +41,13 @@
 $route['default_controller'] 			= "dashboard";
 $route['register']						= "register";
 $route['register/profile']				= "register/insert";
+$route['login']							= "login";
+$route['logout']						= "login/logout";
+// $route['myprofile']						= "User/myprofile";
+
+$route['movies']						= "movie";
+$route['movies/insert']					= "movie/insert";
+
 $route['404_override'] = '';
 
 

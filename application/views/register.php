@@ -24,7 +24,7 @@
                 <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
                 <!-- <li><a href="#">Library</a> <span class="divider">/</span></li> -->
                 <li class="active">Cadastro</li>
-            </ul>        
+            </ul>
 
         </header>
 
@@ -81,7 +81,48 @@
         <footer>
 
             <? require "incs/footer.php";?>
+            <script>
+                $('#register-form').validate({
+                
+                rules: {
+                  name: {
+                    minlength: 2,
+                    required: true
+                  },
+                  mail: {
+                    required: true,
+                    email: true
+                  },
+                  pass: {
+                    required: true,
+                  },
+                  repass: {
+                    required: true,
+                    equalTo: "#pass"
+                  }                      
 
+                },
+                messages :{
+                    repass :{
+                        equalTo : "Senhas divergem."
+                    },
+                    mail :{
+                        email : "E-mail inválido."
+                    }                        
+
+                },
+                    highlight: function(element) {
+                        $(element).closest('.control-group').removeClass('success').addClass('error');
+                    },
+                    success: function(element) {
+
+                        element
+                        .text('OK!').addClass('valid')
+                        .closest('.control-group').removeClass('error').addClass('success');
+                    }
+              });
+
+            </script>
         </footer>        
     </body>
 </html>

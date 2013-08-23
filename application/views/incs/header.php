@@ -1,7 +1,17 @@
+<? // if (!isset($_COOKIE['GRADE_USER_ID']) || $_COOKIE['GRADE_USER_ID'] == '') ir(site_url('/login')); ?>
 
             <ul id="login">
-                <li><i class="icon-user"></i> <a href="<?=site_url('register')?>">Cadastre-se</a></li>
-                <li><a href="#">Logar</a></li>
+
+                <?if (isset($_COOKIE['GRADE_USER_NAME'])) {?>
+
+					<li><i class="icon-user"></i> <a href="<?=site_url('myprofile')?>" title="Acessou <?=$_COOKIE['GRADE_USER_NUMBERACCESS']?> vezes e seu último acesso foi em <?=$_COOKIE['GRADE_USER_LASTACCESS']?>"><?=$_COOKIE['GRADE_USER_NAME']?></a> | <a href="<?=site_url('logout')?>">sair</a></li>
+
+                <?} else {?>
+                
+	                <li><i class="icon-user"></i> <a href="<?=site_url('register')?>">Cadastre-se</a> | <a href="<?=site_url('login')?>">Logar</a></li>
+	                
+
+                <?}?>
             </ul>
 
 			<!-- BOOTSTRAP ::::: MENU COM DROPDOWN  -->
@@ -10,19 +20,33 @@
 			    <a class="brand" href="#">Grade !</a>
 			    <ul class="nav ">
 			      <li class="active"><a href="#">Home</a></li>
-			      <li>
-			      		<a href="#" class="dropdown-toggle" id="dLabel" role="button" data-toggle="dropdown" data-target="#">Lista <b class="caret"></b></a>
-						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+			      <li class="list">
+			      		<a href="#" class="dropdown-toggle" id="listLabel" role="button" data-toggle="dropdown" data-target="#">Lista <b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="listLabel">
 						    <li><a href="#">Séries</a></li>
 						    <li><a href="#">Filmes</a></li>
-						    <li><a href="#">Livros</a></li>
+						    <!-- <li><a href="#">Livros</a></li> -->
 						</ul>
 
 			      	</li>
-			      <li><a href="#">Grade it!</a></li>
+
+				<? if (isset($_COOKIE['GRADE_USER_ID']) ) : ?>			      	
+			      
+			      <li  class="rate">
+					
+					<a  href="#" class="dropdown-toggle"  id="rateLabel" role="button" data-toggle="dropdown" data-target="#">Avalie aqui! <b class="caret"></b></a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="rateLabel">
+					    <li><a href="<?=site_url('series')?>">Série</a></li>
+					    <li><a href="<?=site_url('movies')?>">Filme</a></li>
+					    <!-- <li><a href="#">Livros</a></li> -->
+					</ul>			      	
+
+			      </li>
+
+			  	<? endif;?>
 			    </ul>
 
-
+				<? if (isset($_COOKIE['GRADE_USER_ID']) ) : ?>
 					<!-- BOOTSTRAP ::::: CADASTROS -->
 					<div class="btn-group ">
 					  <button class="btn btn-action">Cadastre</button>
@@ -31,11 +55,11 @@
 					  </button>
 					  <ul class="dropdown-menu">
 							<li><a href="#">Séries</a></li>
-							<li><a href="#">Filmes</a></li>
-							<li><a href="#">Livros</a></li>
+							<li><a href="<?=site_url('movies/insert')?>">Filmes</a></li>
+							<!-- <li><a href="#">Livros</a></li> -->
 					  </ul>
 					</div>
-
+				<? endif;?>	
 			  </div>
 
 

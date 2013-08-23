@@ -8,11 +8,13 @@ header {background-color: }
 
 header h1 {float: left; width: 12em;}
 header ul#login {float: right; width: 20em; list-style: none;}
-header ul#login li {float: left; width: 7em;}
+header ul#login li {float: left; width: 10em;}
+header ul#login li a {font-size: 11px;}
 
 
 header div.navbar {width: 100%; float: left;}
-header div.navbar .dropdown-menu {left: 45%;}
+header div.navbar li.list .dropdown-menu {left: 45%;}
+header div.navbar li.rate .dropdown-menu {left: 72%;}
 header ul.breadcrumb {float: left;}
 
 /*AJUSTE AO BOOSTRAP DE ALINHAMENTO*/
@@ -27,11 +29,24 @@ section { height: 50em;}
 
 section div.returnForm {margin: 0 auto; width: 45%;}
 
+
+/*/// :: CADASTRO DE NOVO USUARIO :: ////////////////////////////////////////////////////////////////////*/
+
 section form#register-form fieldset {width: 40%; margin: 0 auto;}
 section form#register-form fieldset button{float: right; margin-right: 10px; }
+
+/*/// :: LOGIN :: ////////////////////////////////////////////////////////////////////*/
+
+section form#login-form fieldset {width: 40%; margin: 0 auto;}
+section form#login-form fieldset button{float: right; margin-right: 10px; }
+
+/*/// :: CADASTRO DO FILME :: ////////////////////////////////////////////////////////////////////*/
+
+section form#movie-form fieldset {width: 40%; margin: 0 auto; padding-top: 20px;}
+section form#movie-form fieldset button{float: right; margin-right: 10px; }
+
+
 section form legend {width: 70%; padding: 0 10px;}
-
-
 section form label.valid { width: 24px; height: 24px; background: url(../images/valid.png) center center no-repeat; display: inline-block;  text-indent: -9999px;}
 section form label.error { font-weight: bold;  color: red;  padding: 2px 8px;  margin-top: 2px; }
 

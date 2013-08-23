@@ -14,6 +14,7 @@ class Register extends CI_Controller {
 	public function index()
 	{
 
+
 		$data['globals_titlePage'] = " Registro";
 
 		$this->load->view('register',$data);
