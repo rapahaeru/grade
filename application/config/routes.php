@@ -47,6 +47,10 @@ $route['logout']						= "login/logout";
 
 $route['movies']						= "movie";
 $route['movies/insert']					= "movie/insert";
+$route['movies/ajaxdirectors']			= "movie/ajaxdirectors";
+$route['movies/poster']					= "movie/poster";
+
+
 
 $route['404_override'] = '';
 

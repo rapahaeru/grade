@@ -5,7 +5,10 @@ class Movie extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 
-			$this->load->model('User_model','User');
+			//$this->load->model('User_model','User');
+			$this->load->model('Movie_model','Movie');
+
+			
 			//$this->load->model('Contact_model', 'Contact');	
 
 	}
@@ -15,6 +18,8 @@ class Movie extends CI_Controller {
 
 		$data['globals_titlePage'] = " Filmes";
 
+
+
 		$this->load->view('movie_list',$data);
 
 	}
@@ -23,6 +28,15 @@ class Movie extends CI_Controller {
 	public function insert(){
 		
 		$data['globals_titlePage'] = " Cadastrar novo Filme";
+
+		/// GENERO //////////////////////////////////////
+
+		$genderList = $this->Movie->getAllGenders();
+		
+		if ($genderList)
+			$data['genders'] = $genderList;
+
+		/// FIM GENERO //////////////////////////////////////
 
 		$this->load->library('form_validation');
 
@@ -37,7 +51,7 @@ class Movie extends CI_Controller {
 		               array(
 		                     'field'   => 'vintage', 
 		                     'label'   => 'Exibição', 
-		                     'rules'   => 'trim|xss_clean'
+		                     'rules'   => 'trim|required|xss_clean'
 		                  ),
 		               array(
 		                     'field'   => 'name', 
@@ -47,11 +61,6 @@ class Movie extends CI_Controller {
 		               array(
 		                     'field'   => 'original-name', 
 		                     'label'   => 'Nome original', 
-		                     'rules'   => 'trim|required|xss_clean'
-		                  ),
-		               array(
-		                     'field'   => 'director', 
-		                     'label'   => 'Diretor', 
 		                     'rules'   => 'trim|required|xss_clean'
 		                  ),
 		               array(
@@ -92,17 +101,19 @@ class Movie extends CI_Controller {
 
 			/// PASSOU NA VALIDACAO /////////////////////////////////////////////////////////////////
 
-			//$posts = $this->input->post(NULL, TRUE); // returns all POST items with XSS filter 
+			$posts = $this->input->post(NULL, TRUE); // returns all POST items with XSS filter 
 
-			//var_dump($posts);
+			// ADICIONA A ARRAY OS VALORES DO SELECT (GENERO)
+			if (isset($_POST['gender']) && $_POST['gender'] != '' )
+				array_push($posts, $_POST['gender']);
 			
-			//$insertUser = $this->User->save($posts);
+			$insertMovie = $this->Movie->save($posts);
 
-			// if (!$insertUser){
+			 if (!$insertMovie){
 
-			// 	$data['ReturnError'] = 'Ocorreu um erro!';
+			 	$data['ReturnError'] = '<strong>Erro</strong> Houve uma falha na inserção!';
 
-			// }
+			 }
 
 			
 			$this->load->view('success',$data);
@@ -110,6 +121,120 @@ class Movie extends CI_Controller {
 		}
 
 		//$this->load->view('movie_insert',$data);
+
+	}
+
+	function ajaxdirectors(){
+		///////////////////////////////////////////////
+		// Utilizada em views/movie_insert.php
+		// Retorna o nome dos diretores dos filmes
+		// Ajax autocomplete
+		///////////////////////////////////////////////
+
+		
+
+		if ($_GET['term']){
+
+			//echo $_GET['term'];
+
+			$return = $this->Movie->returnDirectorsByAutocompleteName($_GET['term']);
+
+			//var_dump($return);
+
+			if ($return){
+
+				//var_dump($return);
+
+				echo json_encode($return);
+
+			}
+
+		}
+
+		
+
+	}
+
+	// UPLOAD DE IMAGEM VIA AJAX PELO PLUPLOAD
+	function poster(){
+
+		$config['upload_path'] 		= $GLOBALS['physical_path_movieposter']; //variavel em index.php
+		$config['allowed_types'] 	= 'gif|jpg|png';
+		$config['file_name'] 		= md5(date('Ymdhis',time()));
+		//$config['max_size']			= '10000';
+		// $config['max_width']  = '1024';
+		// $config['max_height']  = '768';
+
+		$this->load->library('upload', $config);
+
+		if ( ! $this->upload->do_upload('poster_file'))
+		{
+			$error = array('error' => $this->upload->display_errors());
+
+			echo json_encode($error);
+		}
+		else
+		{
+			$name 	= $this->upload->data();
+
+			$data 	= array(
+						'name' 			=> $name['file_name'],
+						'client_name' 	=> $name['client_name'],
+						'width'			=> $name['image_width'],
+						'height'		=> $name['image_height'],
+						'path' 			=> site_url() . 'posters/movies/',
+						'fullpath' 		=> site_url() . 'posters/movies/' . $name['file_name']);
+			
+			echo json_encode($data);
+		}
+
+	}
+
+	// PARTE SERVER SIDE DE CROPAR IMAGEM ENVIADA PELO JCROP
+	function posterCrop(){
+
+		$targ_w = $targ_h = 140; // medida da imagem
+		$quality = 90; 
+
+		// caminho fisico da imagem
+		$fullPhysicalPath 	= $GLOBALS['physical_path_movieposter'] . "/thumbs/" . $_POST['name'];
+		// caminho http
+		$fullThumbPath 			= $GLOBALS['domain'] . $GLOBALS['base_path'] . $GLOBALS['movies_image_folder'] . "/thumbs/" . $_POST['name'];
+
+		//caminho completo da imagem original
+		$src 		= $_POST['src'];
+
+		 // prepara a imagem
+		 if(strpos(strtolower($src),".jpg")>0 || strpos(strtolower($src),".jpeg")>0){
+		 	$img_r 		= imagecreatefromjpeg($src);
+		} else if (strpos(strtolower($src),".gif")>0){
+			$img_r 		= imagecreatefromgif($src);
+		}else if(strpos(strtolower($src),".png")>0) {
+			$img_r 		= imagecreatefrompng($src);
+		}
+
+		// cria a imagem
+		$dst_r 		= ImageCreateTrueColor( $targ_w, $targ_h );
+
+		// faz uma copia dlea na memoria
+		imagecopyresampled($dst_r,$img_r,0,0,$_POST['x'],$_POST['y'],$targ_w,$targ_h,$_POST['w'],$_POST['h']);
+
+		//header('Content-type: image/jpeg');
+
+		// grava nova imagem
+		 if(strpos(strtolower($src),".jpg")>0 || strpos(strtolower($src),".jpeg")>0){
+		 	imagejpeg($dst_r,$fullPhysicalPath,$quality);
+		} else if (strpos(strtolower($src),".gif")>0){
+			imagegif($dst_r,$fullPhysicalPath,$quality);
+		}else if(strpos(strtolower($src),".png")>0) {
+			imagepng($dst_r,$fullPhysicalPath,0);
+		}		
+
+		$array = array('fullPath' => $fullThumbPath);
+		
+		echo json_encode($array);
+		
+
 
 	}
 

@@ -25,7 +25,7 @@ div.navbar-inner div.btn-group ul.dropdown-menu {left: -45%}
 div.navbar-inner div.btn-group ul.dropdown-menu li a{padding: 3px 5px;}
 
 
-section { height: 50em;}
+section { min-height: 50em;}
 
 section div.returnForm {margin: 0 auto; width: 45%;}
 
@@ -45,11 +45,15 @@ section form#login-form fieldset button{float: right; margin-right: 10px; }
 section form#movie-form fieldset {width: 40%; margin: 0 auto; padding-top: 20px;}
 section form#movie-form fieldset button{float: right; margin-right: 10px; }
 
+section form#movie-form fieldset .poster-movie {width: 140px; height: 140px;}
 
 section form legend {width: 70%; padding: 0 10px;}
 section form label.valid { width: 24px; height: 24px; background: url(../images/valid.png) center center no-repeat; display: inline-block;  text-indent: -9999px;}
 section form label.error { font-weight: bold;  color: red;  padding: 2px 8px;  margin-top: 2px; }
 
+section form #crop-group {display: none;}
+section form #crop-group i {margin-top: 4px;}
+section form #crop-group #crop-image-link {font-size: 11px; letter-spacing: 1px;}
 
 footer p{}
 

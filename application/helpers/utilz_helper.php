@@ -12,6 +12,7 @@ function formatToSystemDate($date){
 		$day = $date[0];
 		$month = $date[1];
 		$year = $date[2];
+		//echo "data=" . date_create($year.'-'.$month.'-'.$day);exit();
 		$date = date_create($year.'-'.$month.'-'.$day)->format('Y-m-d');
 	}else
 		$date = '0000-00-00';
@@ -20,6 +21,7 @@ function formatToSystemDate($date){
 
 // Formata a data no formato Sistema. Y-m-d HH:mm:ss
 function formatToSystemDateTime($dateC){
+	
 	if(!empty($dateC) && strrpos($dateC, " ")){
 
 		$dateC = explode(' ',$dateC);
@@ -104,5 +106,21 @@ function RemoveAcentos($string){
 	$return_string = strtolower($preg_string); // passa tudo para minusculo
 
 	return utf8_encode($return_string); //finaliza, gerando uma saída para a funcao
+}
+
+function stringToURI($title, $id = null, $sep = '/') {
+	$title = strtolower($title);
+	$title = str_replace(array('_', ' '), array('-', '-'), normalizeStr($title));
+	$title = preg_replace('![^\w_-]!', '', $title);
+	$title = preg_replace('!-{2,}!', '-', $title);
+	$title = preg_replace('!^-+|-+$!', '', $title);
+	return $title . (is_null($id) ? '' : $sep . $id);
+}
+
+function normalizeStr($str) {
+	$str = htmlentities($str);
+	$str = preg_replace('/&((?i)[a-z]{1,2})(?:grave|accent|acute|circ|tilde|uml|ring|lig|cedil|slash);/', '$1', $str);
+	$str = str_replace(array('&ETH;', '&eth;', '&THORN;', '&thorn;'), array('dh', 'd', 'TH', 'th'), $str);
+	return $str;
 }
 

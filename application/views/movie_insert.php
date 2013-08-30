@@ -7,6 +7,10 @@
 
         <? require "incs/includes.php" ; ?>
 
+        <link rel="stylesheet" href="<?=$this->config->config['base_view']?>/css/jquery.ui/jquery-ui-1.10.0.custom.css" />
+        <link rel="stylesheet" href="<?=$this->config->config['base_view']?>/bootstrap/css/datepicker.css">
+        <link rel="stylesheet" href="<?=$this->config->config['base_view']?>/css/jcrop/jquery.Jcrop.min.css">
+
     </head>
     <body>
 
@@ -38,6 +42,22 @@
 
 
                     <div class="control-group">
+                        <label class="control-label" for="poster">Poster</label>
+                        <div class="controls">
+                            <div id="container">
+                                <a href="#" id="poster"><img src="" class="img-polaroid poster-movie" alt="" width="140" height="140"></a>
+                                <input type="hidden" name="poster" id="poster-name">
+                                <!-- <a href="#imageModal" data-toggle="modal"><img src="" class="img-polaroid poster-movie" alt="" width="140" height="140"></a> -->
+                            </div>
+                            <div id="crop-group">
+                                <i class="icon-edit"></i>
+                                <a href="#cropModal" id="crop-image-link" data-toggle="modal">Ajustar imagem</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                   <div class="control-group">
                         <label class="control-label" for="animation">Animação</label>
                         <div class="controls">
                             <select name="animation" class="span2" id="animation">
@@ -54,8 +74,12 @@
                         <label class="control-label" for="vintage">Exibição</label>
                         <div class="controls">
                             <input type="text" id="vintage" name="vintage" placeholder="Data de exibição" class="input-xlarge" value="<?=set_value('vintage')?>">
+                            <span class="add-on">
+                                <i class="icon-calendar"></i>
+                            </span>
                         </div>
                     </div>
+
 
                     <div class="control-group">
                         <label class="control-label" for="name">Nome do filme</label>
@@ -98,7 +122,23 @@
                         <div class="controls">
                             <input type="text" id="moreinfo" name="moreinfo" class="input-xlarge" placeholder="Link com informações completas do filme" value="<?=set_value('moreinfo')?>">
                         </div>
-                    </div>                       
+                    </div> 
+
+
+                    <div class="control-group">
+                        <label class="control-label" for="gender">Genero</label>
+                        <div class="controls">
+                            <select name="gender[]" class="span4" id="gender" multiple="multiple">
+                                <?
+                                foreach ($genders as $row) : ?>                                   
+                                    
+                                    <option value="<?=$row->gen_id?>"><?=$row->gen_name?></option>
+
+                                <? endforeach; ?>
+
+                            </select>
+                        </div>
+                    </div>                    
                    
                     <div class="form-actions">
                         
@@ -108,7 +148,57 @@
                     
 
                 </fieldset>
-            </form>    
+            </form> 
+
+
+            <!-- AREA MODAL PRO UPLOAD DE IMAGEM -->
+             <div id="imageModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="imageModalLabel">Enviando imagem ...</h3>
+              </div>
+              <div class="modal-body">
+                <div id="image-bar" class="progress">
+                    <div class="bar" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+            <!-- FIM AREA MODAL -->            
+
+            <!-- AREA MODAL PARA RETORNO DE ERRO NO UPLOAD DE IMAGEM -->
+             <div id="errorModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="imageModalLabel">Erro</h3>
+              </div>
+              <div class="modal-body">
+                <p id="return-error" class="text-error"></p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+              </div>
+            </div>
+            <!-- FIM AREA MODAL -->
+
+            <!-- AREA MODAL PARA CROP -->
+             <div id="cropModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="imageModalLabel">Ajuste de imagem</h3>
+              </div>
+              <div class="modal-body">
+                <img id="image-crop-target" src="" class="img-polaroid poster-movie" width="140" height="140">
+                <input type="hidden" id="x" name="x" />
+                <input type="hidden" id="y" name="y" />
+                <input type="hidden" id="w" name="w" />
+                <input type="hidden" id="h" name="h" />
+              </div>
+              <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                <button class="btn btn-inverse" id="crop-image">Crop!</button>
+              </div>
+            </div>
+            <!-- FIM AREA MODAL -->            
 
 
         </section>
@@ -116,6 +206,175 @@
         <footer>
 
             <? require "incs/footer.php";?>
+
+
+        <script src="<?=$this->config->config['base_view']?>/js/jquery.ui/jquery-ui-1.10.0.custom.min.js"></script>        
+        <script src="<?=$this->config->config['base_view']?>/js/plupload/plupload.full.js"></script>        
+        <script src="<?=$this->config->config['base_view']?>/js/jcrop/jquery.Jcrop.min.js"></script>
+        <script src="<?=$this->config->config['base_view']?>/js/jcrop/jquery.color.js"></script>
+        <!-- script src="<?=$this->config->config['base_view']?>/bootstrap/js/bootstrap-datepicker.js"></script -->
+
+
+        <script>
+
+            var base_url = $('input[name=base_url]').val();
+            var base_view = $('input[name=base_view]').val();
+
+            /// DATEPICKER /////////////////////////////////////////////////////////////
+
+            $("#vintage").datepicker({
+
+                 dateFormat : "dd/mm/yy"
+                
+            });
+            
+            /// AUTOCOMPLETE DIRECTOR //////////////////////////////////////////////////////////
+            $( "#director" ).autocomplete({
+              source: base_url + "movies/ajaxdirectors",
+              minLength: 2,
+               select: function( event, ui ) {
+                 $( "#director" ).val( ui.item.label );
+              //   $( "#director" ).val( ui.item.value );
+              //   $( "#project-description" ).html( ui.item.desc );
+              //   $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+         
+                 return false;
+               }
+
+            });
+
+
+            /// PLUPLOAD DO POSTER ////////////////////////////////////////////////////////////
+
+            $(function() {
+
+
+                var uploader = new plupload.Uploader({
+                    runtimes : 'gears,html5,flash,silverlight,browserplus',
+                    file_data_name: 'poster_file', //nome do arquivo que ira pro server side
+                    browse_button : 'poster', //de onde será acionado o upload
+                    container : 'container',
+                    max_file_size : '2mb',
+                    url : base_url + '/movie/poster',
+                    flash_swf_url : base_view + '/js/plupload.flash.swf',
+                    silverlight_xap_url : base_view + '/js/plupload.silverlight.xap',
+                    filters : [
+                        {title : "Image files", extensions : "jpg,gif,png"},
+                        {title : "Zip files", extensions : "zip"}
+                    ],
+                    //resize : {width : 320, height : 240, quality : 90}
+                    init :{
+                        FileUploaded: function(up, file, info) {
+                        // Chamado quando termina o upload do arquivo
+
+                           var obj = jQuery.parseJSON(info.response);
+                           //console.log('nome : ' + obj.name);
+                           $('#poster-name').val(obj.name);
+                           $('.poster-movie').attr('src',obj.fullpath);
+
+                            //$('#image-crop-target').attr('style','display: none; visibility: hidden; width: ' + obj.width + 'px;height: ' + obj.height + 'px;');
+
+                            $('#image-crop-target').attr('width',obj.width).attr('height',obj.height);
+                            //$('.jcrop-holder').attr('style', 'width: ' + obj.width + 'px;height: ' + obj.height + 'px;position : relative' );
+                            //$('.jcrop-holder img').attr('src',obj.fullpath);
+                            //$('.jcrop-holder img').attr('width',obj.width).attr('height',obj.height);
+                            //$('.jcrop-holder img').attr('style', 'width: ' + obj.width + 'px;height: ' + obj.height + ';' );
+                            
+
+                           $('#crop-group').css('display','inherit');
+
+                            /// JCROP ////////////////////////////////////////////////////////////
+                           $('#image-crop-target').Jcrop({
+                              aspectRatio: 1,
+                              onSelect: updateCoords
+                           }); // carregar somente depois da imagem montada
+
+                        }
+
+                    }
+                });
+
+                /// ao carregar o JS ele avalia qual o runtime e escreve na div
+                uploader.bind('Init', function(up, params) {
+                    //$('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
+                });
+
+                uploader.init();
+
+                /// ONDE ACIONA O UPLOAD
+                uploader.bind('FilesAdded', function(up, files) {
+
+
+                        setTimeout(function(){
+
+                            $('#imageModal').modal('show');
+                            uploader.start();
+                            //e.preventDefault();
+                        },1000);
+
+                    //up.refresh(); // Reposition Flash/Silverlight
+                });
+
+                // ONDE ATUALIZA A BARRA DE PROGRESSO
+                uploader.bind('UploadProgress', function(up, file) {
+                    $('#image-bar .bar').attr('style', 'width:'+ file.percent + '%');
+                    $('#imageModal').modal('hide');
+
+                });
+
+                uploader.bind('Error', function(up, err) {
+                    $('#errorModal').modal('show');
+                    $('#return-error').append("Erro : " + err.code + " | Mensagem : " + err.message + (err.file ? " | Arquivo : " + err.file.name : ""));
+                    //$('#return-error').append(err.message + "! Limite de 2mb");
+
+                    up.refresh(); // Reposition Flash/Silverlight
+                });
+
+            });
+
+            /// JCROP ////////////////////////////////////////////////////////////
+
+              function updateCoords(c)
+              {
+                $('#x').val(c.x);
+                $('#y').val(c.y);
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+              };
+
+            /// complemento do jcrop, ajax do modal de juste de imagem
+            $('#crop-image').click(function(){
+
+
+            var _src = $('#image-crop-target').attr('src');
+            var _x = $('input[name=x]').val();
+            var _y = $('input[name=y]').val();
+            var _w = $('input[name=w]').val();
+            var _h = $('input[name=h]').val();
+            var _name = $('#poster-name').val();
+
+            $.ajax({
+               data      : {src: _src, x: _x, y: _y, w: _w, h: _h, name: _name  },
+               url       : base_url + "/movie/posterCrop/",
+               type      : "POST",
+               
+               beforeSend: function () {
+               
+               },
+               success   : function(retorno){
+                
+                var rtn = jQuery.parseJSON(retorno);
+                $('#cropModal').modal('hide');
+                $('.poster-movie').attr('src',rtn.fullPath);
+
+
+
+                }
+
+            });                
+            })
+
+        </script>
 
         </footer>        
     </body>

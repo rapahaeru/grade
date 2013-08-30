@@ -15,6 +15,20 @@ $GLOBALS['database']['username'] 	= "root";
 $GLOBALS['database']['password'] 	= "root";
 $GLOBALS['database']['database'] 	= "db_grade";
 
+/// LINK FISICO PARA UPLOAD DE IMAGENS //////////////////////////////////////////////
+
+	/// LOCALHOST
+	$GLOBALS['physical_path'] 				= '/home/cael/public_html';
+	$GLOBALS['physical_base_path'] 			= $GLOBALS['physical_path'] . $GLOBALS['base_path'];
+	$GLOBALS['movies_image_folder'] 		= '/posters/movies';
+	//$GLOBALS['series_image_folder'] 		= '/posters/series';
+
+	/// CONTROLLER : movie/poster
+	$GLOBALS['physical_path_movieposter'] 	= $GLOBALS['physical_base_path'] . $GLOBALS['movies_image_folder'] ;
+	//$GLOBALS['physical_path_serieposter'] 	= $GLOBALS['physical_base_path'] . 'posters/series';
+
+
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

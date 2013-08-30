@@ -1,11 +1,12 @@
 <? // if (!isset($_COOKIE['GRADE_USER_ID']) || $_COOKIE['GRADE_USER_ID'] == '') ir(site_url('/login')); ?>
-
+			<input type="hidden" name="base_url" value="<?=site_url()?>">
+			<input type="hidden" name="base_view" value="<?=$this->config->config['base_view']?>">
             <ul id="login">
 
                 <?if (isset($_COOKIE['GRADE_USER_NAME'])) {?>
 
-					<li><i class="icon-user"></i> <a href="<?=site_url('myprofile')?>" title="Acessou <?=$_COOKIE['GRADE_USER_NUMBERACCESS']?> vezes e seu último acesso foi em <?=$_COOKIE['GRADE_USER_LASTACCESS']?>"><?=$_COOKIE['GRADE_USER_NAME']?></a> | <a href="<?=site_url('logout')?>">sair</a></li>
-
+					<li><i class="icon-user"></i> <a href="#" title="Acessou <?=$_COOKIE['GRADE_USER_NUMBERACCESS']?> vezes e seu último acesso foi em <?=$_COOKIE['GRADE_USER_LASTACCESS']?>"><?=$_COOKIE['GRADE_USER_NAME']?></a> | <a href="<?=site_url('logout')?>">sair</a></li>
+					<? //site_url('myprofile')?>
                 <?} else {?>
                 
 	                <li><i class="icon-user"></i> <a href="<?=site_url('register')?>">Cadastre-se</a> | <a href="<?=site_url('login')?>">Logar</a></li>
