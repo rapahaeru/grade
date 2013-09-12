@@ -29,8 +29,38 @@
         </header>
 
         <section>
-    
 
+            <table class="table table-bordered" id="list-movies">
+                <thead>
+                    <th width="5%">Média</th>
+                    <th width="7%">Hanking</th>
+                    <th width="7%">Ano</th>
+                    <th>Nome</th>
+                    <th>Diretor</th>
+                </thead>
+                <tbody>
+                    <? 
+                    if (isset($datamovies) && $datamovies != "") :
+
+                        foreach ($datamovies as $row) : ?>
+                            
+                            <tr>
+                                <td><?=((isset($row->mov_average) && $row->mov_average != NULL) ? $row->mov_average : 'N/A'  )?></td>
+                                <td><a href="#"></a></td>                        
+                                <td><?=((isset($row->mov_yearvintage) && $row->mov_yearvintage != '') ? $row->mov_yearvintage : 'N/A'  )?></td>
+                                <td><a href="<?=site_url('movies/profile/'.$row->mov_seo)?>"><?=$row->mov_name?> (<?=$row->mov_originalname?>)</a> </td>
+                                <td><?=((isset($row->dir_name) && $row->dir_name != '') ? $row->dir_name : 'N/A'  )?></td>
+                            </tr>                    
+                            
+                     <? endforeach;
+                        
+                    endif; ?>
+
+
+                </tbody>
+            </table>            
+            
+            <div class="pagination"><?=$this->pagination->create_links();?></div>
 
         </section>
 

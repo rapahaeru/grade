@@ -5,11 +5,25 @@
 
                 <?if (isset($_COOKIE['GRADE_USER_NAME'])) {?>
 
-					<li><i class="icon-user"></i> <a href="#" title="Acessou <?=$_COOKIE['GRADE_USER_NUMBERACCESS']?> vezes e seu último acesso foi em <?=$_COOKIE['GRADE_USER_LASTACCESS']?>"><?=$_COOKIE['GRADE_USER_NAME']?></a> | <a href="<?=site_url('logout')?>">sair</a></li>
+                	<?
+
+					if (isset($_COOKIE['GRADE_USER_LASTACCESS']) && $_COOKIE['GRADE_USER_LASTACCESS'] != ''){
+
+						$lastAcess = "acessou pela última vez em {$_COOKIE['GRADE_USER_LASTACCESS']}";
+
+					}else{
+
+						$lastAcess = "é a sua primeira vez, seja bem vindo.";
+
+					}
+
+                	?>
+
+					<li><i class="icon-user"></i> <a href="<?=site_url('profile/myprofile')?>" title="Acessou <?=$_COOKIE['GRADE_USER_NUMBERACCESS']?> vezes e <?=$lastAcess?>"><?=$_COOKIE['GRADE_USER_NAME']?></a> | <a href="<?=site_url('logout')?>">sair</a></li>
 					<? //site_url('myprofile')?>
                 <?} else {?>
                 
-	                <li><i class="icon-user"></i> <a href="<?=site_url('register')?>">Cadastre-se</a> | <a href="<?=site_url('login')?>">Logar</a></li>
+	                <li><i class="icon-user"></i> <a href="<?=site_url('profile')?>">Cadastre-se</a> | <a href="<?=site_url('login')?>">Logar</a></li>
 	                
 
                 <?}?>
@@ -20,29 +34,30 @@
 			  <div class="navbar-inner">
 			    <a class="brand" href="#">Grade !</a>
 			    <ul class="nav ">
-			      <li class="active"><a href="#">Home</a></li>
-			      <li class="list">
+			      <li class="<?=(($this->uri->segment(1) == "") ? 'active' : '')?>"><a href="#">Home</a></li>
+			      <li class="<?=(($this->uri->segment(1) == "movies") ? 'active' : '')?>"><a href="<?=site_url('movies')?>">Filmes!</a></li>
+<!-- 			      <li class="list">
 			      		<a href="#" class="dropdown-toggle" id="listLabel" role="button" data-toggle="dropdown" data-target="#">Lista <b class="caret"></b></a>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="listLabel">
 						    <li><a href="#">Séries</a></li>
 						    <li><a href="#">Filmes</a></li>
-						    <!-- <li><a href="#">Livros</a></li> -->
+
 						</ul>
 
-			      	</li>
+			      	</li> -->
 
 				<? if (isset($_COOKIE['GRADE_USER_ID']) ) : ?>			      	
 			      
-			      <li  class="rate">
+<!-- 			      <li  class="rate">
 					
 					<a  href="#" class="dropdown-toggle"  id="rateLabel" role="button" data-toggle="dropdown" data-target="#">Avalie aqui! <b class="caret"></b></a>
 					<ul class="dropdown-menu" role="menu" aria-labelledby="rateLabel">
 					    <li><a href="<?=site_url('series')?>">Série</a></li>
 					    <li><a href="<?=site_url('movies')?>">Filme</a></li>
-					    <!-- <li><a href="#">Livros</a></li> -->
+					    
 					</ul>			      	
 
-			      </li>
+			      </li> -->
 
 			  	<? endif;?>
 			    </ul>

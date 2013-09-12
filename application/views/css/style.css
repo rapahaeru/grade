@@ -24,6 +24,8 @@ div.navbar-inner div.btn-group {float: right; margin-top: 10px}
 div.navbar-inner div.btn-group ul.dropdown-menu {left: -45%}
 div.navbar-inner div.btn-group ul.dropdown-menu li a{padding: 3px 5px;}
 
+/* //////////// GERAL //////////////////*/
+.pagination {float: right; margin: 20px 20px 0 0;}
 
 section { min-height: 50em;}
 
@@ -55,6 +57,16 @@ section form #crop-group {display: none;}
 section form #crop-group i {margin-top: 4px;}
 section form #crop-group #crop-image-link {font-size: 11px; letter-spacing: 1px;}
 
+
+/*////// EDIT PROFILE ////////////////////////////////////////////////////////////////////////////*/
+
+section form#update-profile fieldset {width: 40%; margin: 0 auto; padding-top: 20px;}
+section form#update-profile input {height: 30px;}
+
 footer p{}
+
+/*///////// :: MOVIES LIST :: ////////////////////////////////////////////////////////////////////////*/
+section div.movie-list {width: 80%; margin: 0 auto; border: 1px solid #000;}
+
 
 

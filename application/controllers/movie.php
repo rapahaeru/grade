@@ -18,7 +18,45 @@ class Movie extends CI_Controller {
 
 		$data['globals_titlePage'] = " Filmes";
 
+		
+		//echo "<pre>"; var_dump($datamovies);
 
+		/////////// :: Biblioteca de paginação :: ///////////////
+		$this->load->library('pagination');
+
+		if ($this->uri->segment(3) === FALSE){
+		 	$page = 1;
+		} else {
+			//die ("entrou");
+			$page = $this->uri->segment(3);
+		}			
+
+		$config['base_url'] 	= base_url('movies/page');
+		$config['total_rows'] 	= $this->Movie->getTotalMovies('1'); // ativos
+		$config['per_page'] 	= 3; 
+
+		$config["uri_segment"] 			= 3;
+		$num_links 						= $config["total_rows"] / $config["per_page"];
+    	$config["num_links"] 			= round($num_links);
+		$config['use_page_numbers'] 	= TRUE;
+		$config['page_query_string'] 	= FALSE;
+
+		$this->pagination->initialize($config);
+
+		$datamovies = $this->Movie->getMovies('latest',$config['per_page'],$page);
+
+		if ($datamovies){
+
+			foreach ($datamovies as $row) {
+				
+				$row->mov_yearvintage = date('Y',strtotime($row->mov_vintage));
+
+			}
+
+			$data['datamovies'] = $datamovies;
+
+		}
+			
 
 		$this->load->view('movie_list',$data);
 
@@ -234,6 +272,36 @@ class Movie extends CI_Controller {
 		
 		echo json_encode($array);
 		
+
+
+	}
+
+
+	function profile(){
+		if ($this->uri->segment(3) != ""){
+
+			$movie_seo = $this->uri->segment(3);
+			
+			/// DADOS DO FILME
+			$returnMovieProfile = $this->Movie->getMovieBySeoName($movie_seo);
+			if ($returnMovieProfile)
+				$data['profile'] = $returnMovieProfile;
+
+			///GENEROS DO FILME
+			$returnMovieGender = $this->Movie->getGenderByMovieSeoName($movie_seo);
+			if ($returnMovieGender)
+				$data['gender'] = $returnMovieGender;
+			
+			echo "<pre>"; var_dump($returnMovieProfile);
+			$data['globals_titlePage'] = $returnMovieProfile[0]->mov_name;
+
+			//echo $returnMovieProfile[0]->mov_name;;
+
+		}else{
+
+			ir(site_url('movies'));
+
+		}
 
 
 	}

@@ -23,7 +23,7 @@
             <ul class="breadcrumb">
                 <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
                 <!-- <li><a href="#">Library</a> <span class="divider">/</span></li> -->
-                <li class="active">Cadastro</li>
+                <li class="active">Meu profile</li>
             </ul>
 
         </header>
@@ -34,41 +34,36 @@
 
             <div class="returnForm"><?php echo validation_errors(); ?></div>   
 
-            <?=form_open('profile/insert',  array('class' => 'form-horizontal', 'id' => 'register-form')  ); ?>
+            <?=form_open('profile/update',  array('class' => 'form-horizontal', 'id' => 'update-profile')  ); ?>
             <!-- <form id="register-form" action="" class="form-horizontal"> -->
                 <fieldset>
-                    <legend> Preencha o formulário de cadastro </legend>
+                    <!-- <legend> Preencha o formulário de cadastro </legend> -->
                     <div class="control-group">
                         <label class="control-label" for="inputName">Nome</label>
                         <div class="controls">
-                            <input type="text" id="name" name="name" placeholder="Digite seu nome" value="<?=set_value('name')?>">
+                            <input type="text" id="name" name="name" placeholder="Digite seu nome" class="input-xlarge" value="<?=((isset($name) && $name != '') ? $name : '' )?>">
                         </div>
                     </div>
                     
                     <div class="control-group">
                         <label class="control-label" for="mail">E-mail</label>
                         <div class="controls">
-                            <input type="email" id="mail" name="mail" placeholder="Digite seu e-mail" value="<?=set_value('mail')?>">
+                            <input type="email" id="mail" name="mail" class="input-xlarge" value="<?=((isset($mail) && $mail != '') ? $mail : '' )?>" disabled>
                         </div>
                     </div>
                     
                     <div class="control-group">
                         <label class="control-label" for="pass">Senha</label>
                         <div class="controls">
-                            <input type="password" id="pass" name="pass" placeholder="Digite sua senha">
+                            <input type="password" id="pass" class="input-xlarge" name="pass" placeholder="Atualize sua senha">
                         </div>
                     </div>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="repass">Confirme Senha</label>
-                        <div class="controls">
-                            <input type="password" id="repass" name="repass" placeholder="Re-digite sua senha">
-                        </div>
-                    </div>                    
+                  
                     <div class="form-actions">
                         
+                        <button type="reset" class="btn btn-danger">Cancel</button>
                         <button class="btn btn-primary" type="submit">Confirma</button>
-                        <button type="reset" class="btn btn-danger">Cancel</button>    
+
                     </div>
                     
 
@@ -82,45 +77,28 @@
 
             <? require "incs/footer.php";?>
             <script>
-                $('#register-form').validate({
+              //   $('#register-form').validate({
                 
-                rules: {
-                  name: {
-                    minlength: 2,
-                    required: true
-                  },
-                  mail: {
-                    required: true,
-                    email: true
-                  },
-                  pass: {
-                    required: true,
-                  },
-                  repass: {
-                    required: true,
-                    equalTo: "#pass"
-                  }                      
+              //   rules: {
+              //     name: {
+              //       minlength: 2,
+              //       required: true
+              //     },
 
-                },
-                messages :{
-                    repass :{
-                        equalTo : "Senhas divergem."
-                    },
-                    mail :{
-                        email : "E-mail inválido."
-                    }                        
+              //   },
+              //   messages :{
 
-                },
-                    highlight: function(element) {
-                        $(element).closest('.control-group').removeClass('success').addClass('error');
-                    },
-                    success: function(element) {
+              //   },
+              //       highlight: function(element) {
+              //           $(element).closest('.control-group').removeClass('success').addClass('error');
+              //       },
+              //       success: function(element) {
 
-                        element
-                        .text('OK!').addClass('valid')
-                        .closest('.control-group').removeClass('error').addClass('success');
-                    }
-              });
+              //           element
+              //           .text('OK!').addClass('valid')
+              //           .closest('.control-group').removeClass('error').addClass('success');
+              //       }
+              // });
 
             </script>
         </footer>        

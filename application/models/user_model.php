@@ -5,28 +5,62 @@ class User_model extends CI_Model {
 
 	/// REGISTER :: PROFILE
 
-	function save($post){
+	function save($post, $id = 0){
 
-		$array = array(
-						'usr_date_insert' 		=> date ("Y-m-d H:i:s"),
-						'usr_date_update' 		=> date ("Y-m-d H:i:s"),
-						'usr_name' 				=> $post['name'],
-						'usr_pass' 				=> $post['pass'],
-						'usr_email' 			=> $post['mail'],
-						'usr_status' 			=> 1
-					  );		
+		if ($id != 0){
+			//////////// :: UPDATE :: ////////////////////////////////////////
 
-		$this->db->insert('usr_user',$array);
-		$userId = $this->db->insert_id();
+			$array = array(
+							'usr_date_update' 		=> date ("Y-m-d H:i:s"),
+							'usr_name' 				=> $post['name'],
+						  );				
 
-		if ( $userId != '' ){
-		
-			return $userId;
-			
+			if ($post['pass'] != 0){
+
+				array_push($array, array('usr_pass' => $post['pass']));
+
+			}
+
+			$this->db->where('usr_id',$id);
+			$this->db->update('usr_user',$array);
+
+			if ($this->db->affected_rows() > 0){
+				$ano = time()+(24*60*60*365);
+				//setcookie('GRADE_USER_NAME',$post['name'],0,'/');
+				setcookie('GRADE_USER_NAME',$post['name'],$ano,'/');
+				return true;
+			}else{
+				return false;	
+			}
+	
+
 		}else{
+			//////////// :: INSERT :: ////////////////////////////////////////
+
+			$array = array(
+							'usr_date_insert' 		=> date ("Y-m-d H:i:s"),
+							'usr_date_update' 		=> date ("Y-m-d H:i:s"),
+							'usr_name' 				=> $post['name'],
+							'usr_pass' 				=> $post['pass'],
+							'usr_email' 			=> $post['mail'],
+							'usr_status' 			=> 1
+						  );		
+
+			$this->db->insert('usr_user',$array);
+			$userId = $this->db->insert_id();
+
+			if ( $userId != '' ){
 			
-			return FALSE;
+				return $userId;
+				
+			}else{
+				
+				return FALSE;
+			}			
+
 		}
+
+
 
 
 	}
@@ -89,6 +123,21 @@ class User_model extends CI_Model {
 
 	}
 
+
+	function ReturnMyProfileById($user_id){
+
+		$this->db->select('usr_name');
+		$this->db->select('usr_email');
+		$this->db->where('usr_id',$user_id);
+		$q = $this->db->get('usr_user');
+
+		if ($q->num_rows() > 0){
+			return $q->result_object();
+		}else{
+			return false;
+		}
+
+	}
 
 	
 }

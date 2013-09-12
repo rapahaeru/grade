@@ -39,16 +39,23 @@
 */
 
 $route['default_controller'] 			= "dashboard";
-$route['register']						= "register";
-$route['register/profile']				= "register/insert";
+$route['profile/register']				= "profile";
+$route['register/profile']				= "profile/insert";
 $route['login']							= "login";
 $route['logout']						= "login/logout";
 // $route['myprofile']						= "User/myprofile";
 
 $route['movies']						= "movie";
+$route['movies/page']					= "movie";
+$route['movies/page/(:num)']			= "movie";
 $route['movies/insert']					= "movie/insert";
 $route['movies/ajaxdirectors']			= "movie/ajaxdirectors";
 $route['movies/poster']					= "movie/poster";
+$route['movies/profile']				= "movie/profile";
+$route['movies/profile/(:any)']			= "movie/profile";
+
+$route['profile/myprofile']				= "profile/myprofile";
+$route['profile/update']				= "profile/update";
 
 
 
