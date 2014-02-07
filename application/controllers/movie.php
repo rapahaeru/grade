@@ -7,6 +7,7 @@ class Movie extends CI_Controller {
 
 			//$this->load->model('User_model','User');
 			$this->load->model('Movie_model','Movie');
+			$this->load->model('Average_model','Average');
 
 			
 			//$this->load->model('Contact_model', 'Contact');	
@@ -284,18 +285,51 @@ class Movie extends CI_Controller {
 			
 			/// DADOS DO FILME
 			$returnMovieProfile = $this->Movie->getMovieBySeoName($movie_seo);
-			if ($returnMovieProfile)
+
+			//debug($returnMovieProfile);
+			
+
+			if ($returnMovieProfile){
+			
+				foreach ($returnMovieProfile as $key) {
+
+					$key->mov_vintage = returnYearFromDate($key->mov_vintage);
+					
+				}
 				$data['profile'] = $returnMovieProfile;
+			
+			}else{
+
+				ir(site_url("movies"));
+			}
 
 			///GENEROS DO FILME
 			$returnMovieGender = $this->Movie->getGenderByMovieSeoName($movie_seo);
 			if ($returnMovieGender)
 				$data['gender'] = $returnMovieGender;
 			
-			echo "<pre>"; var_dump($returnMovieProfile);
+			
+			// AVERAGE
+			if (isset($_COOKIE['GRADE_USER_ID']) && $_COOKIE['GRADE_USER_ID'] > 0){
+				
+				$returnMovieGrade = $this->Average->getMovieAverageByUser($_COOKIE['GRADE_USER_ID']);
+				if ($returnMovieGrade)
+					$data['averageData'] = $returnMovieGrade;
+				else
+					$data['averageData'] = "no-average";
+			
+			}else{
+
+				$data['averageData'] = "no-user";
+
+			}
+				
+			//debug($data['averageData']);
+
 			$data['globals_titlePage'] = $returnMovieProfile[0]->mov_name;
 
-			//echo $returnMovieProfile[0]->mov_name;;
+			$this->load->view('movie_profile',$data);
+
 
 		}else{
 

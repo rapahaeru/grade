@@ -237,10 +237,10 @@ class Movie_model extends CI_Model {
 		$this->db->select('mov_movie.mov_originalname');
 		$this->db->select('mov_movie.mov_name');
 		$this->db->select('mov_movie.mov_seo');
-		//$this->db->select('mov_movie.mov_sinopses');
+		$this->db->select('mov_movie.mov_sinopses');
 		$this->db->select('mov_movie.mov_in_animation');
 		//$this->db->select('mov_movie.mov_trailer');
-		//$this->db->select('mov_movie.mov_moreinfo');
+		$this->db->select('mov_movie.mov_moreinfo');
 		$this->db->select('mov_movie.mov_poster');
 		$this->db->select('mov_movie.mov_average');
 		$this->db->select('dir_director.dir_name');

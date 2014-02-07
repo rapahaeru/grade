@@ -124,3 +124,24 @@ function normalizeStr($str) {
 	return $str;
 }
 
+function returnYearFromDate($date){
+//////////////////////////////////////////////////
+// Recebe data inteira e retorna apenas o ano
+// Utilizada em :
+// Movie->profile()
+//////////////////////////////////////////////////
+
+	$year = date('Y', strtotime($date));
+
+	return $year;
+
+}
+
+function debug($value){
+
+	echo "<pre>";
+	var_dump($value);
+	echo "</pre>";
+
+}
+

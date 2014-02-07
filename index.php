@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 
 /// VIEWS E CONTROLLERS ////////////////////////////////////////////////////////////
-$GLOBALS['title']					= "|| GRADE ||";
+$GLOBALS['title']					= "|| GRADE || ";
 
 /// CONFIG/CONFIG.PHP ///////////////////////////////////////////////////////////////
 $GLOBALS['domain'] 					= "http://".$_SERVER['HTTP_HOST'];

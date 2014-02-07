@@ -27,7 +27,7 @@ div.navbar-inner div.btn-group ul.dropdown-menu li a{padding: 3px 5px;}
 /* //////////// GERAL //////////////////*/
 .pagination {float: right; margin: 20px 20px 0 0;}
 
-section { min-height: 50em;}
+/*section { min-height: 50em;}*/
 
 section div.returnForm {margin: 0 auto; width: 45%;}
 
@@ -67,6 +67,58 @@ footer p{}
 
 /*///////// :: MOVIES LIST :: ////////////////////////////////////////////////////////////////////////*/
 section div.movie-list {width: 80%; margin: 0 auto; border: 1px solid #000;}
+
+/*///////// :: MOVIES PROFILE :: ////////////////////////////////////////////////////////////////////////*/
+
+article {margin: 0 auto; width: 80%;}
+article #movie-profile { background-color: #f2f2f2; float: left; min-height: 20em;}
+article #movie-profile hgroup {margin: 10px; width: 100%; float: left;}
+
+article #movie-profile h1,h2,h3,small {margin: 0; padding: 0;}
+
+
+
+
+article #movie-profile div.left { float: left; width: 65%; min-height: 100px;}
+article #movie-profile div.right { float: right; width: 32%;}
+
+article #movie-profile div.right #movie-poster { float: right; width: 250px; height: 250px; background: #666; margin: 20px;}
+
+article #movie-profile div.left ul.gender-list {float: left; list-style: none; width: 100%; padding: 0; margin: 10px 0 10px 10px;}
+article #movie-profile div.left ul.gender-list li {float: left;}
+article #movie-profile div.left ul.gender-list li a { padding: 3px 5px; margin: 2px; background-color: #FFF;}
+
+
+article #movie-profile .movie-sinopses { padding: 10px; float: left; width: 100%;}
+article #movie-profile a.more-info {float: left; padding: 10px;}
+
+/* ////////////////// :: AVERAGE :: //////////////////////////////////; */
+
+
+article #average-info {/*float: right;*/ width: 305px; margin: auto; background: #FFF; padding: 10px 5px; }
+
+article #average-info #slider-average{float: left; width: 100%; margin: 10px 0;}
+
+article #average-info .gray{background-color: #666;}
+article #average-info .good{background-color: #3545ea;}
+article #average-info .regular{background-color: #666;}
+article #average-info .great{background-color: #666;}
+article #average-info .bad{background-color: #d80d24;}
+
+article #average-info .average {float: right; background: #d7f4ed; padding: 10px 5px; width: 85px; border: 1px solid #90edd6; }
+article #average-info .average span {float: left; color: #FFF; padding: 5px 10px; background-color: #666; margin: 10px; font-size: 30px;}
+article #average-info .average p {float: left; padding: 5px; margin:0;}
+
+article #average-info .hanking {float: right; background: #d8f2ff; padding: 10px 5px; width: 85px; margin-right: 5px; border: 1px solid #b6e3f9;}
+article #average-info .hanking span {float: right; color: #FFF; padding: 5px 10px; background-color: #000; margin: 10px; font-size: 30px; }
+article #average-info .hanking a {float: left; padding: 5px;}
+
+article #average-info .personal-average {float: right; background: #fcffd3; padding: 10px 5px; width: 85px; margin-right: 5px; border: 1px solid #e9f271;}
+article #average-info .personal-average span {float: right; color: #FFF; padding: 5px 10px; margin: 10px; font-size: 30px;  }
+article #average-info .personal-average p {float: left; padding: 5px; margin:0;}
+
+
+
 
 
 
