@@ -145,3 +145,14 @@ function debug($value){
 
 }
 
+// in_object method
+// to check if a value in an object exists.
+function in_object($value,$object) {
+if (is_object($object)) {
+  foreach($object as $key => $item) {
+    if ($value==$item) return $key;
+  }
+}
+return false;
+}
+

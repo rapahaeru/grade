@@ -24,11 +24,13 @@
                 <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
                 <!-- <li><a href="#">Library</a> <span class="divider">/</span></li> -->
                 <li class="active">Lista de filmes</li>
-            </ul>            
+            </ul>
 
         </header>
 
         <section>
+
+            <p><a href="<?=site_url('movies/approval')?>">lista de filmes a serem aprovados</a></p>
 
             <table class="table table-bordered" id="list-movies">
                 <thead>

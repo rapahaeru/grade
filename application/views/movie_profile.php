@@ -112,7 +112,7 @@
                   <div class="right">
                     
                     <div id="movie-poster">
-                      <? if (isset($row->mov_poster) && $row->mov_poster!= ""){?><img src="<?=$row->mov_poster?>" alt=""><?}?>  
+                      <? if (isset($row->mov_poster) && $row->mov_poster!= ""){?><img src="<?=$midia->imageCrop('300','300',$row->mov_poster)?>" alt=""><?}?>  
                     </div>
                     
                   </div>

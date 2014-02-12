@@ -49,11 +49,15 @@ $route['movies']						= "movie";
 $route['movies/page']					= "movie";
 $route['movies/page/(:num)']			= "movie";
 $route['movies/insert']					= "movie/insert";
+$route['movies/update-info/(:any)']		= "movie/infoUpdate";
+$route['movies/update/(:any)']			= "movie/update";
 $route['movies/ajaxdirectors']			= "movie/ajaxdirectors";
 $route['movies/poster']					= "movie/poster";
 $route['movies/profile']				= "movie/profile";
 $route['movies/profile/(:any)']			= "movie/profile";
-
+$route['movies/approval']				= "movie/approval";
+$route['movies/approval/page']			= "movie/approval";
+$route['movies/approval/page/(:num)']	= "movie/approval";
 $route['profile/myprofile']				= "profile/myprofile";
 $route['profile/update']				= "profile/update";
 

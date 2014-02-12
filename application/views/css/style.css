@@ -24,6 +24,9 @@ div.navbar-inner div.btn-group {float: right; margin-top: 10px}
 div.navbar-inner div.btn-group ul.dropdown-menu {left: -45%}
 div.navbar-inner div.btn-group ul.dropdown-menu li a{padding: 3px 5px;}
 
+
+section .informative {text-align: center; padding: 10px 0; margin: 10px 0; background: #F3E7B9; border: 1px solid #E2CE7F}
+
 /* //////////// GERAL //////////////////*/
 .pagination {float: right; margin: 20px 20px 0 0;}
 

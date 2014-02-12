@@ -5,9 +5,11 @@ class Movie extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 
-			//$this->load->model('User_model','User');
+			$this->load->model('User_model','User');
 			$this->load->model('Movie_model','Movie');
 			$this->load->model('Average_model','Average');
+
+			$this->load->helper('midia');
 
 			
 			//$this->load->model('Contact_model', 'Contact');	
@@ -281,6 +283,12 @@ class Movie extends CI_Controller {
 	function profile(){
 		if ($this->uri->segment(3) != ""){
 
+			
+			$data['midia'] = new Midia();
+
+			//echo $midia->baseView;
+			//echo $midia->imageResize(1,2,3);
+
 			$movie_seo = $this->uri->segment(3);
 			
 			/// DADOS DO FILME
@@ -339,5 +347,274 @@ class Movie extends CI_Controller {
 
 
 	}
+
+
+	function infoUpdate(){
+
+		if ($this->uri->segment(3) != "" && isset($_COOKIE['GRADE_USER_ID']) && $_COOKIE['GRADE_USER_ID'] != ""){
+
+			$data['midia'] = new Midia();
+
+			$UserLevel = $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+
+			if (!$UserLevel)
+				ir(site_url("movies"));
+
+			$movieName = $this->uri->segment(3);
+
+			$data['globals_titlePage'] = " Update : ". $movieName;
+
+			$MovieData = $this->Movie->getMovieBySeoName($movieName);
+
+			if ($MovieData)
+				$data['movieData'] = $MovieData;
+			else 
+				ir(site_url("movies"));
+			
+			//debug($MovieData);
+
+
+			/// GENERO //////////////////////////////////////
+
+			$genderList = $this->Movie->getAllGenders();
+			
+			if ($genderList)
+				$data['genders'] = $genderList;
+
+			foreach ($MovieData as $value) {
+				$genderMovie 	= 	$this->Movie->getGenderByMovieid($value->mov_id);
+				$approvalMovie 	= $value->mov_approval;
+			}
+
+			/////////////////////////////////////////////
+			// FILME APROVADO OU EM ESPERA DE APROVACAO
+			if ($approvalMovie == 0)
+				$data['needApproval'] = true;
+			else
+				$data['needApproval'] = false;
+			/////////////////////////////////////////////
+
+			if ($genderMovie)
+				$data['genderMovie'] = $genderMovie;
+			
+			/////////////////////////////////////////////////////////////
+			// Na view, já chega com a listagem dos generos pertencentes
+			// fo filme, marcados como "selected = true"
+			foreach ($genderList as $key) {
+				
+				foreach ($genderMovie as $key2) {
+					
+					if ($key->gen_id == $key2->gen_id){
+						$key->selected = true;
+					}
+
+				}
+
+			}
+			//////////////////////////////////////////////////////////////
+
+			/// FIM GENERO //////////////////////////////////////
+
+			$this->load->view('movie_update',$data);
+
+		}
+
+	}
+
+	function update(){
+
+		if ($this->uri->segment(3) != "" && isset($_COOKIE['GRADE_USER_ID']) && $_COOKIE['GRADE_USER_ID'] != ""){
+
+			$data['midia'] = new Midia();
+
+			$movieName = $this->uri->segment(3);
+
+			$UserLevel = $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+
+			if (!$UserLevel)
+				ir(site_url("movies"));
+
+
+			$data['globals_titlePage'] = " Update : ". $movieName;
+
+			$MovieData = $this->Movie->getMovieBySeoName($movieName);
+
+			if ($MovieData)
+				$data['movieData'] = $MovieData;
+			
+			//debug($MovieData);
+
+
+			/// GENERO //////////////////////////////////////
+
+			$genderList = $this->Movie->getAllGenders();
+			
+			if ($genderList)
+				$data['genders'] = $genderList;
+
+			foreach ($MovieData as $value) {
+				$genderMovie = 	$this->Movie->getGenderByMovieid($value->mov_id);
+			}
+
+			if ($genderMovie)
+				$data['genderMovie'] = $genderMovie;
+			
+			/////////////////////////////////////////////////////////////
+			// Na view, já chega com a listagem dos generos pertencentes
+			// fo filme, marcados como "selected = true"
+			foreach ($genderList as $key) {
+				
+				foreach ($genderMovie as $key2) {
+					
+					if ($key->gen_id == $key2->gen_id){
+						$key->selected = true;
+					}
+
+				}
+
+			}
+			//////////////////////////////////////////////////////////////
+
+			/// FIM GENERO //////////////////////////////////////
+
+			$this->load->library('form_validation');
+
+			/// Regras de validacao do formulario
+			$config = array(
+			               array(
+			                     'field'   => 'animation', 
+			                     'label'   => 'Animação', 
+			                     'rules'   => 'required'
+			                     //'rules'   => 'required|trim|xss_clean'
+			                  ),
+			               array(
+			                     'field'   => 'vintage', 
+			                     'label'   => 'Exibição', 
+			                     'rules'   => 'trim|required|xss_clean'
+			                  ),
+			               array(
+			                     'field'   => 'name', 
+			                     'label'   => 'Nome', 
+			                     'rules'   => 'trim|required|xss_clean'
+			                  ),   
+			               array(
+			                     'field'   => 'original-name', 
+			                     'label'   => 'Nome original', 
+			                     'rules'   => 'trim|required|xss_clean'
+			                  ),
+			               array(
+			                     'field'   => 'trailer', 
+			                     'label'   => 'Trailer', 
+			                     'rules'   => 'trim|xss_clean'
+			                  ),
+			               array(
+			                     'field'   => 'sinopses', 
+			                     'label'   => 'Sinopse', 
+			                     'rules'   => 'trim|xss_clean'
+			                  ),
+			               array(
+			                     'field'   => 'moreinfo', 
+			                     'label'   => 'Link Extra', 
+			                     'rules'   => 'trim|xss_clean'
+			                  )
+
+			            );
+
+			/// Efetua a validacao com as regras acima citadas
+			$this->form_validation->set_rules($config);
+
+			/// Seta as mensagens de retorno, de acordo com a regra (rule) utilizada
+			$this->form_validation->set_message('required', '%s Campo obrigatório');
+			//$this->form_validation->set_message('is_unique', 'E-mail existente, Tente outro.');
+
+			///Elemento html que abraçará o erro no retorno ao html
+			$this->form_validation->set_error_delimiters('<div class="alert alert-error">', '</div>');
+
+			if ($this->form_validation->run() == FALSE) {
+
+				/// NAO PASSOU NA VALIDACAO ////////////////////////////////////////////////////////////
+				
+				$this->load->view('movie_update',$data);
+			
+			} else {
+
+				/// PASSOU NA VALIDACAO /////////////////////////////////////////////////////////////////
+
+				$posts = $this->input->post(NULL, TRUE); // returns all POST items with XSS filter 
+
+				// ADICIONA A ARRAY OS VALORES DO SELECT (GENERO)
+				if (isset($_POST['gender']) && $_POST['gender'] != '' )
+					array_push($posts, $_POST['gender']);
+				
+				//debug($posts);
+
+				$updateMovieData = $this->Movie->save($posts,$_POST['mov_id']);
+				debug($updateMovieData);
+
+				 // if (!$insertMovie){
+
+				 // 	$data['ReturnError'] = '<strong>Erro</strong> Houve uma falha na inserção!';
+
+				 // }
+
+				
+				$this->load->view('success',$data);
+
+			}
+
+		}
+
+
+	}
+
+
+	function approval(){
+
+		$data['globals_titlePage'] = " Filmes a serem aprovados";
+
+		
+		//echo "<pre>"; var_dump($datamovies);
+
+		/////////// :: Biblioteca de paginação :: ///////////////
+		$this->load->library('pagination');
+
+		if ($this->uri->segment(4) === FALSE){
+		 	$page = 1;
+		} else {
+			//die ("entrou");
+			$page = $this->uri->segment(4);
+		}			
+
+		$config['base_url'] 	= base_url('movies/approval/page');
+		$config['total_rows'] 	= $this->Movie->getTotalMovies('1'); // ativos
+		$config['per_page'] 	= 3; 
+
+		$config["uri_segment"] 			= 4;
+		$num_links 						= $config["total_rows"] / $config["per_page"];
+    	$config["num_links"] 			= round($num_links);
+		$config['use_page_numbers'] 	= TRUE;
+		$config['page_query_string'] 	= FALSE;
+
+		$this->pagination->initialize($config);
+
+		$datamovies = $this->Movie->getMovies('latest',$config['per_page'],$page,'0');
+
+		if ($datamovies){
+
+			foreach ($datamovies as $row) {
+				
+				$row->mov_yearvintage = date('Y',strtotime($row->mov_vintage));
+
+			}
+
+			$data['datamovies'] = $datamovies;
+
+		}
+			
+
+		$this->load->view('movie_list',$data);
+
+	}
+
 
 }

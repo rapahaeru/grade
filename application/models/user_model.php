@@ -126,8 +126,8 @@ class User_model extends CI_Model {
 
 	function ReturnMyProfileById($user_id){
 
-		$this->db->select('usr_name');
-		$this->db->select('usr_email');
+		// $this->db->select('usr_name');
+		// $this->db->select('usr_email');
 		$this->db->where('usr_id',$user_id);
 		$q = $this->db->get('usr_user');
 
@@ -138,6 +138,21 @@ class User_model extends CI_Model {
 		}
 
 	}
+
+
+	function userIsAdm($user_id){
+
+		$this->db->where('usr_id',$user_id);
+		$this->db->where('usr_level', 1);
+		$q = $this->db->get('usr_user');
+		//echo $this->db->last_query();
+		if ($q->num_rows() > 0){
+			return true;
+		}else{
+			return false;
+		}
+
+	}	
 
 	
 }
