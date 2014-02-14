@@ -19,18 +19,24 @@
         <header>
             
             <? require "incs/header.php";?>
-
+            
             <ul class="breadcrumb">
                 <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
                 <!-- <li><a href="#">Library</a> <span class="divider">/</span></li> -->
-                <li class="active">Lista de filmes</li>
+                <li class="active">Lista de filmes <?=(($this->uri->segment(2) == "approval") ? "a serem aprovados" : "" )?></li>
             </ul>
 
         </header>
 
         <section>
-
-            <p><a href="<?=site_url('movies/approval')?>">lista de filmes a serem aprovados</a></p>
+            
+            <? if ($this->uri->segment(2) != "approval" ) : ?>
+                
+                <?if ($UserAdm == true) :?>
+                    <p><a href="<?=site_url('movies/approval')?>">lista de filmes a serem aprovados</a></p>
+                <? endif;?>
+            
+            <? endif;?>
 
             <table class="table table-bordered" id="list-movies">
                 <thead>
@@ -50,7 +56,18 @@
                                 <td><?=((isset($row->mov_average) && $row->mov_average != NULL) ? $row->mov_average : 'N/A'  )?></td>
                                 <td><a href="#"></a></td>                        
                                 <td><?=((isset($row->mov_yearvintage) && $row->mov_yearvintage != '') ? $row->mov_yearvintage : 'N/A'  )?></td>
-                                <td><a href="<?=site_url('movies/profile/'.$row->mov_seo)?>"><?=$row->mov_name?> (<?=$row->mov_originalname?>)</a> </td>
+                                <td>
+                                    <? if (isset($UserAdm) && $UserAdm === true) : ?><a href="<?=site_url('movies/update-info/'.$row->mov_seo)?>" title="Editar"><i class="icon-cog"></i></a> <?endif;?>
+                                    <? if($this->uri->segment(2) == "approval") :?>
+                                    
+                                    <a href="<?=site_url('movies/profile/'.$row->mov_seo)?>" title="preview"> <i class="icon-zoom-in"></i></a>
+
+                                        <?=$row->mov_name?> (<?=$row->mov_originalname?>)
+                                    <?else :?>
+                                        <a href="<?=site_url('movies/profile/'.$row->mov_seo)?>"><?=$row->mov_name?> (<?=$row->mov_originalname?>)</a> 
+                                    <? endif;?>
+                                    
+                                </td>
                                 <td><?=((isset($row->dir_name) && $row->dir_name != '') ? $row->dir_name : 'N/A'  )?></td>
                             </tr>                    
                             

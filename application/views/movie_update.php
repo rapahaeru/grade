@@ -26,12 +26,12 @@
 
             <ul class="breadcrumb">
                 <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
-                <!-- <li><a href="#">Library</a> <span class="divider">/</span></li> -->
+                <li><a href="<?=site_url("movies")?>">Filmes</a> <span class="divider">/</span></li>
                 <li class="active">Editar dados do filme</li>
             </ul>            
 
         </header>
-        <? if (isset($needApproval) && $needApproval === false) :?>
+        <? if (isset($needApproval) && $needApproval === true) :?>
             <section>
                 <p class="informative">Filme na lista de aprovação, <a href="#">aprovar</a> ?</p>
             </section>

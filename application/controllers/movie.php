@@ -22,7 +22,17 @@ class Movie extends CI_Controller {
 		$data['globals_titlePage'] = " Filmes";
 
 		
-		//echo "<pre>"; var_dump($datamovies);
+		if (isset($_COOKIE['GRADE_USER_ID']) && $_COOKIE['GRADE_USER_ID'] != ""){
+			
+			$UserAdm 			= $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+			$data['UserAdm'] 	= $UserAdm;
+
+		}else{
+			
+			$data['UserAdm'] 	= false;
+		
+		}
+
 
 		/////////// :: Biblioteca de paginação :: ///////////////
 		$this->load->library('pagination');
@@ -355,9 +365,18 @@ class Movie extends CI_Controller {
 
 			$data['midia'] = new Midia();
 
-			$UserLevel = $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+			if (isset($_COOKIE['GRADE_USER_ID']) && $_COOKIE['GRADE_USER_ID'] != ""){
+				
+				$UserAdm 			= $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+				$data['UserAdm'] 	= $UserAdm;
 
-			if (!$UserLevel)
+			}else{
+				
+				$data['UserAdm'] 	= false;
+			
+			}
+
+			if (!$UserAdm)
 				ir(site_url("movies"));
 
 			$movieName = $this->uri->segment(3);
@@ -572,8 +591,24 @@ class Movie extends CI_Controller {
 
 		$data['globals_titlePage'] = " Filmes a serem aprovados";
 
+		if (isset($_COOKIE['GRADE_USER_ID']) && $_COOKIE['GRADE_USER_ID'] != ""){
+			
+			$UserAdm 			= $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+			$data['UserAdm'] 	= $UserAdm;
+
+		}else{
+			
+			$data['UserAdm'] 	= false;
 		
-		//echo "<pre>"; var_dump($datamovies);
+		}
+		
+
+		$UserAdm = $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+
+		if (!$UserAdm)
+			ir(site_url("movies"));
+
+		
 
 		/////////// :: Biblioteca de paginação :: ///////////////
 		$this->load->library('pagination');

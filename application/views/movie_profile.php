@@ -25,7 +25,7 @@
 
             <ul class="breadcrumb">
                 <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
-                <!-- <li><a href="#">Library</a> <span class="divider">/</span></li> -->
+                <li><a href="<?=site_url("movies")?>">Filmes</a> <span class="divider">/</span></li>
                 <li class="active">Filme</li>
             </ul>
 
