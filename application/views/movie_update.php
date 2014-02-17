@@ -26,14 +26,20 @@
 
             <ul class="breadcrumb">
                 <li><a href="<?=site_url()?>">Home</a> <span class="divider">/</span></li>
-                <li><a href="<?=site_url("movies")?>">Filmes</a> <span class="divider">/</span></li>
+
+                <? if (isset($needApproval) && $needApproval === true) :?>
+                    <li><a href="<?=site_url("movies/approval")?>">Lista de filmes a serem aprovados</a> <span class="divider">/</span></li>
+                <?else :?>
+                    <li><a href="<?=site_url("movies")?>">Lista de filmes</a> <span class="divider">/</span></li>
+                <?endif;?>
+
                 <li class="active">Editar dados do filme</li>
             </ul>            
 
         </header>
         <? if (isset($needApproval) && $needApproval === true) :?>
             <section>
-                <p class="informative">Filme na lista de aprovação, <a href="#">aprovar</a> ?</p>
+                <p class="informative">Filme na lista de aprovação, <a href="#approval-modal" data-toggle="modal" title="Aprovar este filme!">aprovar</a> ?</p>
             </section>
         <?endif;?>
 
@@ -207,6 +213,21 @@
             </div>
             <!-- FIM AREA MODAL -->            
 
+            <!-- MODAL CONFIRMA APROVACAO -->
+            <div id="approval-modal" class="modal hide fade">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3>Confirmação</h3>
+              </div>
+              <div class="modal-body">
+                <p>Confirma a aprovação deste filme ?</p>
+              </div>
+              <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Não, desisto!</a>
+                <a href="#" class="btn btn-primary approval-confirm">Sim</a>
+              </div>
+            </div>
+            <!-- FIM MODAL CONFIRMA APROVACAO -->
 
         </section>
 
@@ -353,33 +374,57 @@
             $('#crop-image').click(function(){
 
 
-            var _src = $('#image-crop-target').attr('src');
-            var _x = $('input[name=x]').val();
-            var _y = $('input[name=y]').val();
-            var _w = $('input[name=w]').val();
-            var _h = $('input[name=h]').val();
-            var _name = $('#poster-name').val();
+                var _src = $('#image-crop-target').attr('src');
+                var _x = $('input[name=x]').val();
+                var _y = $('input[name=y]').val();
+                var _w = $('input[name=w]').val();
+                var _h = $('input[name=h]').val();
+                var _name = $('#poster-name').val();
 
-            $.ajax({
-               data      : {src: _src, x: _x, y: _y, w: _w, h: _h, name: _name  },
-               url       : base_url + "/movie/posterCrop/",
-               type      : "POST",
-               
-               beforeSend: function () {
-               
-               },
-               success   : function(retorno){
+                $.ajax({
+                   data      : {src: _src, x: _x, y: _y, w: _w, h: _h, name: _name  },
+                   url       : base_url + "/movie/posterCrop/",
+                   type      : "POST",
+                   
+                   beforeSend: function () {
+                   
+                   },
+                   success   : function(retorno){
+                    
+                    var rtn = jQuery.parseJSON(retorno);
+                    $('#cropModal').modal('hide');
+                    $('.poster-movie').attr('src',rtn.fullPath);
+
+
+
+                    }
+
+                });
+
+            });
+
+
+            $('.approval-confirm').click(function (){
+
+                var $mov_id = $('input[name=mov_id]').val();
+
+                $.ajax({
+
+                    data: {approval: true, mov_id: $mov_id},
+                    url: base_url + "/movie/approval-confirm",
+                    type: "POST",
+                    beforeSend : function (){
+
+                    }, 
+                    success : function (retorno) {
+
+                        $('#approval-modal').modal('hide');
+                        window.location.href = base_url + "/movies";
+                    }
+                });
+
                 
-                var rtn = jQuery.parseJSON(retorno);
-                $('#cropModal').modal('hide');
-                $('.poster-movie').attr('src',rtn.fullPath);
-
-
-
-                }
-
-            });                
-            })
+            });            
 
         </script>
 

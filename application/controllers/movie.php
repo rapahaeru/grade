@@ -37,16 +37,9 @@ class Movie extends CI_Controller {
 		/////////// :: Biblioteca de paginação :: ///////////////
 		$this->load->library('pagination');
 
-		if ($this->uri->segment(3) === FALSE){
-		 	$page = 1;
-		} else {
-			//die ("entrou");
-			$page = $this->uri->segment(3);
-		}			
-
-		$config['base_url'] 	= base_url('movies/page');
-		$config['total_rows'] 	= $this->Movie->getTotalMovies('1'); // ativos
-		$config['per_page'] 	= 3; 
+		$config['base_url'] 			= base_url('movies/page');
+		$config['total_rows'] 			= $this->Movie->getTotalMovies('1'); // ativos
+		$config['per_page'] 			= 10; 
 
 		$config["uri_segment"] 			= 3;
 		$num_links 						= $config["total_rows"] / $config["per_page"];
@@ -54,9 +47,24 @@ class Movie extends CI_Controller {
 		$config['use_page_numbers'] 	= TRUE;
 		$config['page_query_string'] 	= FALSE;
 
+		/////////////////////////////////////////////
+		// CALCULAR O "INI" DA PAGINACAO
+		if ($this->uri->segment(3) === FALSE){
+		 	$page 	= 0;
+		 	$ini 	= $page*$config['per_page'];
+
+		} else {
+
+			$page 	= $this->uri->segment(3);
+			$ini 	= ($page-1)*$config['per_page'];	
+		}
+		/////////////////////////////////////////////
+		
+
 		$this->pagination->initialize($config);
 
-		$datamovies = $this->Movie->getMovies('latest',$config['per_page'],$page);
+		$datamovies = $this->Movie->getMovies('latest',$config["per_page"],$ini);
+					
 
 		if ($datamovies){
 
@@ -568,7 +576,7 @@ class Movie extends CI_Controller {
 				//debug($posts);
 
 				$updateMovieData = $this->Movie->save($posts,$_POST['mov_id']);
-				debug($updateMovieData);
+				//debug($updateMovieData);
 
 				 // if (!$insertMovie){
 
@@ -614,15 +622,16 @@ class Movie extends CI_Controller {
 		$this->load->library('pagination');
 
 		if ($this->uri->segment(4) === FALSE){
-		 	$page = 1;
+		 	$page = 0;
 		} else {
 			//die ("entrou");
 			$page = $this->uri->segment(4);
-		}			
+		}	
+		echo $page;		
 
-		$config['base_url'] 	= base_url('movies/approval/page');
-		$config['total_rows'] 	= $this->Movie->getTotalMovies('1'); // ativos
-		$config['per_page'] 	= 3; 
+		$config['base_url'] 			= base_url('movies/approval/page');
+		$config['total_rows'] 			= $this->Movie->getTotalMovies('1'); // ativos
+		$config['per_page'] 			= 10; 
 
 		$config["uri_segment"] 			= 4;
 		$num_links 						= $config["total_rows"] / $config["per_page"];
@@ -630,9 +639,22 @@ class Movie extends CI_Controller {
 		$config['use_page_numbers'] 	= TRUE;
 		$config['page_query_string'] 	= FALSE;
 
+		/////////////////////////////////////////////
+		// CALCULAR O "INI" DA PAGINACAO
+		if ($this->uri->segment(4) === FALSE){
+		 	$page 	= 0;
+		 	$ini 	= $page*$config['per_page'];
+
+		} else {
+
+			$page 	= $this->uri->segment(4);
+			$ini 	= ($page-1)*$config['per_page'];	
+		}
+		/////////////////////////////////////////////		
+		echo $ini;
 		$this->pagination->initialize($config);
 
-		$datamovies = $this->Movie->getMovies('latest',$config['per_page'],$page,'0');
+		$datamovies = $this->Movie->getMovies('latest',$config['per_page'],$ini,'0');
 
 		if ($datamovies){
 
@@ -651,5 +673,25 @@ class Movie extends CI_Controller {
 
 	}
 
+
+	function approvalConfirm () {
+
+		//debug($_POST);
+		if (isset($_POST) && $_POST['approval'] == "true"){
+
+			$approvalConfirm = $this->Movie->setMovieApproval($_POST['mov_id']);
+
+			if ($approvalConfirm)
+				return true;
+
+		}else{
+			
+			return false;	
+
+		}
+		
+
+
+	}
 
 }

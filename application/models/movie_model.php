@@ -102,9 +102,14 @@ class Movie_model extends CI_Model {
 
 			///////////////////////////////////////////////////////////////////////////////////////////////////
 			// INSERT
-			array_push($array, array('mov_status' => 1));
+			//array_push($array, array('mov_status' => 1));
+			$array['mov_status'] 		= 1;
+			$array['mov_created_id'] 	= $_COOKIE['GRADE_USER_ID'];
+			$array['mov_date_insert'] 	= date ("Y-m-d H:i:s");
 
 
+			// debug($array);
+			// exit();
 			 $this->db->insert('mov_movie',$array);
 			 $movieId = $this->db->insert_id();
 
@@ -252,7 +257,6 @@ class Movie_model extends CI_Model {
 			$this->db->where('mov_movie.mov_approval',$status);
 
 		if ($par == 'latest'){
-
 			$this->db->order_by('mov_date_insert','DESC');
 		
 		}
@@ -371,5 +375,21 @@ class Movie_model extends CI_Model {
 		return $q->num_rows();
 	}
 
+
+	function setMovieApproval ($idMovie){
+
+		$array = array('mov_approval' => 1);
+
+		$this->db->where('mov_id',$idMovie);
+		$this->db->update('mov_movie',$array);
+
+		$num_mov = $this->db->affected_rows();
+		if ($num_mov > 0){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
 
 }

@@ -45,6 +45,7 @@ $route['login']							= "login";
 $route['logout']						= "login/logout";
 // $route['myprofile']						= "User/myprofile";
 
+
 $route['movies']						= "movie";
 $route['movies/page']					= "movie";
 $route['movies/page/(:num)']			= "movie";
@@ -61,6 +62,7 @@ $route['movies/approval/page/(:num)']	= "movie/approval";
 $route['profile/myprofile']				= "profile/myprofile";
 $route['profile/update']				= "profile/update";
 
+$route['movie/approval-confirm']		= "movie/approvalConfirm";
 
 
 $route['404_override'] = '';
