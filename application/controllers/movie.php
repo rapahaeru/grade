@@ -611,9 +611,9 @@ class Movie extends CI_Controller {
 		}
 		
 
-		$UserAdm = $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+		//$UserAdm = $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
 
-		if (!$UserAdm)
+		if (!$data['UserAdm'])
 			ir(site_url("movies"));
 
 		
@@ -689,9 +689,66 @@ class Movie extends CI_Controller {
 			return false;	
 
 		}
-		
-
 
 	}
+
+	function remove() {
+
+
+		// $data['returnCOD'] = "0"; SEM PERMISSAO
+		// $data['returnCOD'] = "1"; SUCESSO
+		// $data['returnCOD'] = "2"; ERRO
+
+
+		if (isset($_COOKIE['GRADE_USER_ID']) && $_COOKIE['GRADE_USER_ID'] != ""){
+			
+			$UserAdm 			= $this->User->userIsAdm($_COOKIE['GRADE_USER_ID']);
+			$data['UserAdm'] 	= $UserAdm;
+
+		}else{
+			
+			$data['UserAdm'] 	= false;
+		
+		}
+
+		if (!$data['UserAdm']){
+
+//			$data['returnInfo'] 	= "Você não possui permissão.";
+//			$data['returnCOD'] 		= "0";
+			echo "Você não possui permissão";
+
+		}else{
+
+			//echo "entrou";
+
+			if (isset($_POST['movieid']) && $_POST['movieid'] != "" )
+				$returnMovieId 	=  $this->Movie->removeById($_POST['movieid']);
+				//$returnMovieId 	=  false;
+
+			//debug($returnMovieId);
+
+			if ($returnMovieId){
+
+				echo "Removido com sucesso !";
+
+//				$data['returnInfo']		= "Remoção efetuada com sucesso!";
+//				$data['returnCOD'] 		= "1";			
+			
+			}else{
+				echo "Ocorreu um erro na remoção!";
+			}
+	
+
+		}
+
+		//$this->load->view('movie_list',$data);
+
+	
+		/////////////////////////////////////////////////////////////	
+	
+		//$this->load->view('success',$data);
+
+	}
+
 
 }

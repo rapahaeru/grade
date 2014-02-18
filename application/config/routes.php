@@ -62,8 +62,11 @@ $route['movies/approval/page/(:num)']	= "movie/approval";
 $route['profile/myprofile']				= "profile/myprofile";
 $route['profile/update']				= "profile/update";
 
-$route['movie/approval-confirm']		= "movie/approvalConfirm";
 
+
+
+$route['movie/approval-confirm']		= "movie/approvalConfirm";
+$route['movie/remove/(:any)']			= "movie/remove";
 
 $route['404_override'] = '';
 

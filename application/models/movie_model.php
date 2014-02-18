@@ -363,9 +363,9 @@ class Movie_model extends CI_Model {
 
 	function getTotalMovies($type = 1){
 
-		//////////////////////////////////////////////////////////////////////////////
-		/// TYPE : recebe os parametros ('1' = ativos / '0' = inativos / 'ALL' = todos)
-		//////////////////////////////////////////////////////////////////////////////		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// TYPE : recebe os parametros ('1' = ativos / '0' = em aprovacao/ 3 = excluidos / 'ALL' = todos)
+		////////////////////////////////////////////////////////////////////////////////////////////////////		
 
 		if ($type != 'ALL')
 			$this->db->where('mov_approval',$type);
@@ -390,6 +390,28 @@ class Movie_model extends CI_Model {
 			return false;
 		}
 		
+	}
+
+
+	function removeById($movieId){
+
+		$array = array('mov_approval' => 3);
+
+		$this->db->where('mov_id',$movieId);
+		$this->db->update('mov_movie',$array);
+
+		//echo $this->db->last_query();
+
+		$num_mov_removed = $this->db->affected_rows();
+
+		//echo $num_mov_removed;
+
+		if ($num_mov_removed > 0){
+			return $num_mov_removed;
+		}else{
+			return false;
+		}
+
 	}
 
 }
