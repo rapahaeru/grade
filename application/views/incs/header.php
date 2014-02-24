@@ -71,7 +71,7 @@
 					  </button>
 					  <ul class="dropdown-menu">
 							<li><a href="#">Séries</a></li>
-							<li><a href="<?=site_url('movies/insert')?>">Filmes</a></li>
+							<li><a href="<?=site_url('movie/insert')?>">Filmes</a></li>
 							<!-- <li><a href="#">Livros</a></li> -->
 					  </ul>
 					</div>

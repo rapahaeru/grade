@@ -61,16 +61,16 @@
                                 <td><a href="#"></a></td>                        
                                 <td><?=((isset($row->mov_yearvintage) && $row->mov_yearvintage != '') ? $row->mov_yearvintage : 'N/A'  )?></td>
                                 <td>
-                                    <? if (isset($UserAdm) && $UserAdm === true) : ?><a href="<?=site_url('movies/update-info/'.$row->mov_seo)?>" title="Editar"><i class="icon-cog"></i></a> <?endif;?>
+                                    <? if (isset($UserAdm) && $UserAdm === true) : ?><a href="<?=site_url('movie/update-info/'.$row->mov_seo)?>" title="Editar"><i class="icon-cog"></i></a> <?endif;?>
                                     <? if (isset($UserAdm) && $UserAdm === true) : ?><a href="#remove-modal" id="<?=$row->mov_id?>" class="remove-item" title="Remover" data-toggle="modal"> <i class="icon-remove"></i></a> <?endif;?><? //=site_url('movie/remove/'.$row->mov_seo)?>
                                     
                                     <? if($this->uri->segment(2) == "approval") :?>
                                     
-                                    <a href="<?=site_url('movies/profile/'.$row->mov_seo)?>" title="preview"> <i class="icon-zoom-in"></i></a>
+                                    <a href="<?=site_url('movie/profile/'.$row->mov_seo)?>" title="preview"> <i class="icon-zoom-in"></i></a>
 
                                         <?=$row->mov_name?> (<?=$row->mov_originalname?>)
                                     <?else :?>
-                                        <a href="<?=site_url('movies/profile/'.$row->mov_seo)?>"><?=$row->mov_name?> (<?=$row->mov_originalname?>)</a> 
+                                        <a href="<?=site_url('movie/profile/'.$row->mov_seo)?>"><?=$row->mov_name?> (<?=$row->mov_originalname?>)</a> 
                                     <? endif;?>
                                     
                                 </td>
