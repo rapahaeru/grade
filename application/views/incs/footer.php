@@ -7,16 +7,3 @@
             <script src="<?=$this->config->config['base_view']?>/bootstrap/js/bootstrap.js"></script>
             <script src="<?=$this->config->config['base_view']?>/js/main.js"></script>
             <script src="<?=$this->config->config['base_view']?>/js/jquery.validate/jquery.validate.min.js"></script>
-
-            <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-            <script>
-                var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-                (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-                g.src='//www.google-analytics.com/ga.js';
-                s.parentNode.insertBefore(g,s)}(document,'script'));
-            </script>
-            <script>
-            
-                $('.dropdown-toggle').dropdown()
-
-            </script>

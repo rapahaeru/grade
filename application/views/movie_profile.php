@@ -129,26 +129,7 @@
 
             <? require "incs/footer.php";?>
             <script src="<?=$this->config->config['base_view']?>/js/jquery.ui/jquery-ui-1.10.0.custom.min.js"></script>
-            
-            <script>
-
-
-
-                  $(function() {
-                    $( "#slider-average" ).slider({
-                      range: "max",
-                      step: 0.1,
-                      min: 0,
-                      max: 10,
-                      value: 5.1,
-                      slide: function( event, ui ) {
-                        $( "#personal-average" ).html( ui.value );
-                      }
-                    });
-                    $( "#personal-average" ).html( $( "#slider-average" ).slider( "value" ) );
-                  });  
-
-            </script>
+            <script src="<?=$this->config->config['base_view']?>/js/movie/profile.js"></script>
         </footer>        
     </body>
 </html>
