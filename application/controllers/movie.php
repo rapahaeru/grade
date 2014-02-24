@@ -7,6 +7,7 @@ class Movie extends CI_Controller {
 
 			$this->load->model('User_model','User');
 			$this->load->model('Gender_model','Gender');
+			$this->load->model('Director_model','Director');
 			$this->load->model('Movie_model','Movie');
 			$this->load->model('Average_model','Average');
 
@@ -197,7 +198,7 @@ class Movie extends CI_Controller {
 
 			//echo $_GET['term'];
 
-			$return = $this->Movie->returnDirectorsByAutocompleteName($_GET['term']);
+			$return = $this->Director->returnDirectorsByAutocompleteName($_GET['term']);
 
 			//var_dump($return);
 
