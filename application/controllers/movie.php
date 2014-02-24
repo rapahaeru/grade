@@ -6,6 +6,7 @@ class Movie extends CI_Controller {
 		parent::__construct();
 
 			$this->load->model('User_model','User');
+			$this->load->model('Gender_model','Gender');
 			$this->load->model('Movie_model','Movie');
 			$this->load->model('Average_model','Average');
 
@@ -90,7 +91,7 @@ class Movie extends CI_Controller {
 
 		/// GENERO //////////////////////////////////////
 
-		$genderList = $this->Movie->getAllGenders();
+		$genderList = $this->Gender->getAllGenders();
 		
 		if ($genderList)
 			$data['genders'] = $genderList;
@@ -330,7 +331,7 @@ class Movie extends CI_Controller {
 			}
 
 			///GENEROS DO FILME
-			$returnMovieGender = $this->Movie->getGenderByMovieSeoName($movie_seo);
+			$returnMovieGender = $this->Gender->getGenderByMovieSeoName($movie_seo);
 			if ($returnMovieGender)
 				$data['gender'] = $returnMovieGender;
 			
@@ -403,13 +404,13 @@ class Movie extends CI_Controller {
 
 			/// GENERO //////////////////////////////////////
 
-			$genderList = $this->Movie->getAllGenders();
+			$genderList = $this->Gender->getAllGenders();
 			
 			if ($genderList)
 				$data['genders'] = $genderList;
 
 			foreach ($MovieData as $value) {
-				$genderMovie 	= 	$this->Movie->getGenderByMovieid($value->mov_id);
+				$genderMovie 	= 	$this->Gender->getGenderByMovieid($value->mov_id);
 				$approvalMovie 	= $value->mov_approval;
 			}
 
@@ -474,13 +475,13 @@ class Movie extends CI_Controller {
 
 			/// GENERO //////////////////////////////////////
 
-			$genderList = $this->Movie->getAllGenders();
+			$genderList = $this->Gender->getAllGenders();
 			
 			if ($genderList)
 				$data['genders'] = $genderList;
 
 			foreach ($MovieData as $value) {
-				$genderMovie = 	$this->Movie->getGenderByMovieid($value->mov_id);
+				$genderMovie = 	$this->Gender->getGenderByMovieid($value->mov_id);
 			}
 
 			if ($genderMovie)
